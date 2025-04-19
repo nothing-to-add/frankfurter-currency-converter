@@ -14,7 +14,7 @@ import SwiftUI
 struct frankfurter_currency_converterApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CurrencyListView()
         }
     }
 }
