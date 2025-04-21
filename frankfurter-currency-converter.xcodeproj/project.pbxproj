@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		F56E16C02DB6E19200230F2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B84C092DAF1B1B0089CA32 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5B84C102DAF1B1B0089CA32;
+			remoteInfo = "frankfurter-currency-converter";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		F56E16BC2DB6E19200230F2C /* frankfurter-currency-converterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "frankfurter-currency-converterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B84C112DAF1B1B0089CA32 /* frankfurter-currency-converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "frankfurter-currency-converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		F56E16BD2DB6E19200230F2C /* frankfurter-currency-converterTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "frankfurter-currency-converterTests";
+			sourceTree = "<group>";
+		};
 		F5B84C132DAF1B1B0089CA32 /* frankfurter-currency-converter */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "frankfurter-currency-converter";
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F56E16B92DB6E19200230F2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5B84C0E2DAF1B1B0089CA32 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				F5B84C132DAF1B1B0089CA32 /* frankfurter-currency-converter */,
+				F56E16BD2DB6E19200230F2C /* frankfurter-currency-converterTests */,
 				F5B84C122DAF1B1B0089CA32 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				F5B84C112DAF1B1B0089CA32 /* frankfurter-currency-converter.app */,
+				F56E16BC2DB6E19200230F2C /* frankfurter-currency-converterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F56E16BB2DB6E19200230F2C /* frankfurter-currency-converterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F56E16C42DB6E19200230F2C /* Build configuration list for PBXNativeTarget "frankfurter-currency-converterTests" */;
+			buildPhases = (
+				F56E16B82DB6E19200230F2C /* Sources */,
+				F56E16B92DB6E19200230F2C /* Frameworks */,
+				F56E16BA2DB6E19200230F2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F56E16C12DB6E19200230F2C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F56E16BD2DB6E19200230F2C /* frankfurter-currency-converterTests */,
+			);
+			name = "frankfurter-currency-converterTests";
+			packageProductDependencies = (
+			);
+			productName = "frankfurter-currency-converterTests";
+			productReference = F56E16BC2DB6E19200230F2C /* frankfurter-currency-converterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F5B84C102DAF1B1B0089CA32 /* frankfurter-currency-converter */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5B84C1C2DAF1B1F0089CA32 /* Build configuration list for PBXNativeTarget "frankfurter-currency-converter" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
+					F56E16BB2DB6E19200230F2C = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = F5B84C102DAF1B1B0089CA32;
+					};
 					F5B84C102DAF1B1B0089CA32 = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				F5B84C102DAF1B1B0089CA32 /* frankfurter-currency-converter */,
+				F56E16BB2DB6E19200230F2C /* frankfurter-currency-converterTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F56E16BA2DB6E19200230F2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5B84C0F2DAF1B1B0089CA32 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F56E16B82DB6E19200230F2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5B84C0D2DAF1B1B0089CA32 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F56E16C12DB6E19200230F2C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5B84C102DAF1B1B0089CA32 /* frankfurter-currency-converter */;
+			targetProxy = F56E16C02DB6E19200230F2C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		F56E16C22DB6E19200230F2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CN3U3X2JQC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nothing-to-add.frankfurter-currency-converterTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/frankfurter-currency-converter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/frankfurter-currency-converter";
+			};
+			name = Debug;
+		};
+		F56E16C32DB6E19200230F2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CN3U3X2JQC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nothing-to-add.frankfurter-currency-converterTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/frankfurter-currency-converter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/frankfurter-currency-converter";
+			};
+			name = Release;
+		};
 		F5B84C1A2DAF1B1F0089CA32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -309,6 +420,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F56E16C42DB6E19200230F2C /* Build configuration list for PBXNativeTarget "frankfurter-currency-converterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F56E16C22DB6E19200230F2C /* Debug */,
+				F56E16C32DB6E19200230F2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F5B84C0C2DAF1B1B0089CA32 /* Build configuration list for PBXProject "frankfurter-currency-converter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

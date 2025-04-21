@@ -22,9 +22,10 @@ class CurrencyViewModel: ObservableObject {
     private var currencyBase = "EUR"
     private var timer = Timer()
     private var cancellables = Set<AnyCancellable>()
-    private let currencyFetcher = CurrencyFetcher()
+    private let currencyFetcher: CurrencyFetcherProtocol
     
-    init() {
+    init(currencyFetcher: CurrencyFetcherProtocol = CurrencyFetcher()) {
+        self.currencyFetcher = currencyFetcher
         Task { @MainActor in
             await fetchCurrencies(base: currencyBase)
             startAutoRefresh()

@@ -10,11 +10,20 @@
 
 import Foundation
 
-struct CurrencyFetcher {
+protocol CurrencyFetcherProtocol {
+    func fetchRates(for currency: String) async throws -> Response
+}
+
+struct CurrencyFetcher: CurrencyFetcherProtocol {
     private let baseURL = "https://api.frankfurter.app/latest?base="
+    private let httpClient: HTTPClient
+    
+    init(networkClient: HTTPClient = HTTPClientManager.shared.getHTTPClient()) {
+        httpClient = networkClient
+    }
     
     func fetchRates(for currency: String) async throws -> Response {
-        let networkManager = NetworkManager(httpClient: HTTPClientManager.shared.getHTTPClient())
+        let networkManager = NetworkManager(httpClient: httpClient)
         
         let data = try await networkManager.fetchData(from: baseURL + currency, as: Response.self)
         return data
