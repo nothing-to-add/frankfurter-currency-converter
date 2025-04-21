@@ -12,46 +12,39 @@ import Foundation
 import Combine
 
 // ViewModel for Currency Converter
+@Observable
 class CurrencyViewModel: ObservableObject {
-    @Published var currencies: [Currency] = []
-    @Published var selectedCurrency: Currency? = nil
+    
+    var currencies: [Currency] = []
+    var selectedCurrency: Currency? = nil
+    
     private var amount: Double = 1.0
     private var currencyBase = "EUR"
     private var timer = Timer()
-    
     private var cancellables = Set<AnyCancellable>()
-    private let baseURL = "https://api.frankfurter.app/latest?base="
+    private let currencyFetcher = CurrencyFetcher()
     
     init() {
-        fetchCurrencies(base: currencyBase)
-        startAutoRefresh()
+        Task { @MainActor in
+            await fetchCurrencies(base: currencyBase)
+            startAutoRefresh()
+        }
     }
     
-    func fetchCurrencies(base: String) {
-        guard let url = URL(string: baseURL + currencyBase) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error fetching data: \(error)")
-                return
+    @MainActor
+    func fetchCurrencies(base: String) async {
+        do {
+            let response = try await currencyFetcher.fetchRates(for: base)
+            if self.selectedCurrency == nil {
+                self.selectedCurrency = Currency(code: response.base, rate: response.amount)
             }
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            do {
-                let response = try JSONDecoder().decode(Response.self, from: data)
-                DispatchQueue.main.async {
-                    if self.selectedCurrency == nil {
-                        self.selectedCurrency = Currency(code: response.base, rate: response.amount)
-                    }
-                    self.currencies = response.rates.map { Currency(code: $0.key, rate: $0.value) }
-                        .sorted { $0.code < $1.code }
-                }
-            } catch {
-                print("Error decoding response: \(error)")
-            }
-        }.resume()
+            self.currencies = response.rates.map { Currency(code: $0.key, rate: $0.value) }
+                .sorted { $0.code < $1.code }
+        } catch let error as NetworkError {
+            print(String(describing: error.errorDescription))
+        } catch {
+            print("Error decoding response: \(error)")
+        }
     }
     
     func startAutoRefresh() {
@@ -59,7 +52,9 @@ class CurrencyViewModel: ObservableObject {
             .autoconnect()
             .sink { [weak self] _ in
                 if let self, !currencies.isEmpty {
-                    fetchCurrencies(base: currencyBase)
+                    Task { @MainActor in
+                        await self.fetchCurrencies(base: self.currencyBase)
+                    }
                 }
             }
             .store(in: &cancellables)
@@ -72,13 +67,14 @@ class CurrencyViewModel: ObservableObject {
         } else {
             self.amount = 1.0
         }
-        
     }
     
     func selectCurrency(_ currency: Currency) {
         selectedCurrency = nil
         currencyBase = currency.code
-        fetchCurrencies(base: currency.code)
+        Task { @MainActor in
+            await fetchCurrencies(base: currency.code)
+        }
     }
     
     func getCurrencyValue(for currency: Currency) -> String {
