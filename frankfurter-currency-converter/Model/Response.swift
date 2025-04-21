@@ -11,7 +11,7 @@
 import Foundation
 
 // Model of API Response
-struct Response: Decodable {
+struct Response: Codable, Equatable {
     let amount: Double
     let base: String
     let date: String
