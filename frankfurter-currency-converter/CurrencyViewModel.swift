@@ -16,29 +16,43 @@ import Combine
 class CurrencyViewModel: ObservableObject {
     
     var currencies: [Currency] = []
-    var selectedCurrency: Currency? = nil
+    var selectedCurrency : Currency? = nil
     
     private var amount: Double = 1.0
-    private var currencyBase = "EUR"
+    private var currencyBase: CurrentValueSubject<String, Never>
     private var timer = Timer()
     private var cancellables = Set<AnyCancellable>()
     private let currencyFetcher: CurrencyFetcherProtocol
     
     init(currencyFetcher: CurrencyFetcherProtocol = CurrencyFetcher()) {
         self.currencyFetcher = currencyFetcher
-        Task { @MainActor in
-            await fetchCurrencies(base: currencyBase)
-            startAutoRefresh()
+        currencyBase = CurrentValueSubject<String, Never>("EUR")
+        initLiseners()
+    }
+    
+    func initLiseners() {
+        Publishers.Merge(
+            currencyBase.eraseToAnyPublisher(),
+            Timer.publish(every: 3.0, on: .main, in: .common)
+                .autoconnect()
+                .map { _ in self.currencyBase.value }
+        )
+        .removeDuplicates()
+        .sink { [weak self] currency in
+            if let self {
+                Task { @MainActor in
+                    await self.fetchCurrencies(base: currency)
+                }
+            }
         }
+        .store(in: &cancellables)
     }
     
     @MainActor
-    func fetchCurrencies(base: String) async {
+    private func fetchCurrencies(base: String) async {
         do {
             let response = try await currencyFetcher.fetchRates(for: base)
-            if self.selectedCurrency == nil {
                 self.selectedCurrency = Currency(code: response.base, rate: response.amount)
-            }
             self.currencies = response.rates.map { Currency(code: $0.key, rate: $0.value) }
                 .sorted { $0.code < $1.code }
         } catch let error as NetworkError {
@@ -48,22 +62,9 @@ class CurrencyViewModel: ObservableObject {
         }
     }
     
-    func startAutoRefresh() {
-        Timer.publish(every: 3.0, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
-                if let self, !currencies.isEmpty {
-                    Task { @MainActor in
-                        await self.fetchCurrencies(base: self.currencyBase)
-                    }
-                }
-            }
-            .store(in: &cancellables)
-    }
-    
-    func updateRates(for amount: Double?) {
+    func updateRates(for amount: String) {
         guard selectedCurrency != nil else { return }
-        if let newValue = amount {
+        if let newValue = Double(amount) {
             self.amount = newValue
         } else {
             self.amount = 1.0
@@ -71,11 +72,7 @@ class CurrencyViewModel: ObservableObject {
     }
     
     func selectCurrency(_ currency: Currency) {
-        selectedCurrency = nil
-        currencyBase = currency.code
-        Task { @MainActor in
-            await fetchCurrencies(base: currency.code)
-        }
+        currencyBase.send(currency.code)
     }
     
     func getCurrencyValue(for currency: Currency) -> String {
